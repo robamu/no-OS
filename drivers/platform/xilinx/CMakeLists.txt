@@ -1,4 +1,11 @@
-target_compile_definitions(no-os PUBLIC -DXILINX_PLATFORM)
+# Vitis 2023.2+ only generates BSPs in System Device Tree (SDT) flow (the
+# classic .mss/DeviceId flow was dropped), so the BSP-provided XSpiPs_/
+# XGpioPs_LookupConfig() etc. always resolve by base address, not device
+# index. SDT must be defined here too, or the #ifdef SDT branches in these
+# drivers silently compile out while still linking against the SDT-flavored
+# BSP functions - passing a small device index where a base address is
+# expected, which only "works" by accident when that index happens to be 0.
+target_compile_definitions(no-os PUBLIC -DXILINX_PLATFORM -DSDT)
 
 # Arch-conditionality (PS vs PL peripherals, PS7 vs PSU) is handled inside the
 # driver sources via #ifdef on the BSP-provided XPAR_* / header guards, so the

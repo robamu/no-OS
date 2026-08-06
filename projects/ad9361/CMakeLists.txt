@@ -10,6 +10,7 @@ endif()
 
 target_sources(ad9361 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/reg_dump.c
 )
 
 # XILINX_PLATFORM is always needed so main.c takes the Xilinx code path.

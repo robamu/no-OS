@@ -96,17 +96,25 @@
 #define GPIO_ENABLE_PIN				125
 #define GPIO_TXNRX_PIN        		126
 #define SPI_DEVICE_ID				XPAR_PSU_SPI_0_DEVICE_ID
+#define SPI_BASE_ADDR				XPAR_XSPIPS_0_BASEADDR
 #define UART_IRQ_ID				XPAR_XUARTPS_0_INTR
 #else
 #define GPIO_DEVICE_ID				XPAR_PS7_GPIO_0_DEVICE_ID
-#define GPIO_RESET_PIN				100
+/* Zedboard xband gateware: AD9361_RESETB is wired to EMIO GPIO bit 32
+ * (54 MIO pins + EMIO offset 32), and the AD9361 SPI lines go through
+ * PS SPI1, not ADI's reference SPI0/GPIO100. See gateware/src/zedboard-bd.tcl. */
+#define GPIO_RESET_PIN				86
 #define GPIO_SYNC_PIN				99
 #define GPIO_RESET_PIN_2			113
 #define GPIO_CAL_SW1_PIN			107
 #define GPIO_CAL_SW2_PIN			108
 #define GPIO_ENABLE_PIN				101
 #define GPIO_TXNRX_PIN        		102
-#define SPI_DEVICE_ID				XPAR_PS7_SPI_0_DEVICE_ID
+/* device_id here only indexes no-OS's generic SPI bus table (0..8); the
+ * actual SDT base-address lookup happens via xil_spi_param.base_addr in
+ * main.c, which is set from SPI_BASE_ADDR below. */
+#define SPI_DEVICE_ID				XPAR_PS7_SPI_1_DEVICE_ID
+#define SPI_BASE_ADDR				XPAR_XSPIPS_1_BASEADDR
 #define UART_IRQ_ID				XPAR_XUARTPS_1_INTR
 #endif
 #define GPIO_RESET_PIN_ZC702		84
